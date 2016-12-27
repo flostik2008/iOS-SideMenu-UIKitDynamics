@@ -1,0 +1,113 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 \expnd0\expndtw0\kerning0
+\
+1. \
+Our custom view conforms to tableView delegate and dataSourse (because menu will be a tableView.)\
+We implement 3 necessary methods. \
+4th func: heightForRowAt and we specify "50"\
+5th func: didSelectRowAt . \
+\
+2. \
+Declare properties. Some of them are necessary for the init method. \
+In init, we first call parent init (super.init). Inside, we create a frame. \
+We assign each of the property, to value of arg that came with the method. \
+We give darkGray color to backgroundColor of self. (we could've specify it as arg of the init, but we simplified)\
+We add that instance of the view (self) to the parentViewController (that came as arg)\
+\
+3. \
+For such complex class we also have to implement the "required init?(coder aDecoder: NSCoder) " \
+\
+4. \
+After we set all the slideMenu propeties from init's args, we set up menuView ( with all its contents). but we don't have that func yet. We just leave a placeholder for now and continue with creation of animator and UISwipeGestureRecognizers, after which the animation should take place. \
+We going to have 2 gestures - one that recognizes a swipe to the right (show the menu) and one - swipe to the left (hide the menu).\
+Outside of init we create a func handleGestures with "UISwipeGestureRecognizer" as arg. \
+Inside, we test for each direction of the gestures - one for open, one for closing the menu. \
+We create a new func toggleMenu that is either true or false. \
+\
+5. \
+Back to init func, we can create our UISwipeGestureRecognizers. \
+It takes a target which is "self", and action which is handleGestures. \
+Set the direction of that swipe as right. \
+Add that UISwipeGestureRecognizer to our parent view.\
+\
+6. \
+Copy and create another UISwipeGestureRecognizer "hideMenuRecognizer" with a direction of left. \
+Add that to our parent view. \
+	\
+7. \
+func toggleMenu. \
+We remove all behaviors from the animator, since toggleMenu will be called often, each time needs to be clean. \
+Before creation our first behavior, we have to define some constants for that. \
+Specify gravity in a specific direction  X, if arg "open" = true , then assign value 2, if "open"=false, assign -1. Now, it will open faster than it closes. \
+Specify push magnitude. If arg "open" = true, then 2, if not -20.\
+Specify boundary . If arg "open" = true, then menuWidth, if not -menuWidth-5\
+Ready to create our behavior.\
+\
+8. \
+Create UIGravityBehavior. Set its direction using CGVector and our constants for X and 0 for Y (since its menu moves only in X direction). \
+Adding that behavior to animator. \
+Next behavior is collision. \
+Set its boundaries, using our constant boundaryX and known parameters. \
+Adding that behavior to animator. \
+Next behavior is push. ".instantaneous" mode. \
+Set its magnitude to our constant. \
+Adding it to animator. \
+\
+9. \
+Adding elasticity to our menu (UIDynamicItemBehavior).\
+Adding it to animator. \
+\
+10. \
+Adding little animation to the main view (not menu) to dim when menu slides out. \
+When menu open (open = true) = 0.5, otherwise 0. \
+\
+11. \
+func setupMenuView( ) - declare it and call for it in the init method. \
+We get the view's CGRect out of the parentViewController's view. \
+Need to make sure that our "backgroundView" is in the background: ".insertSubview(backgroundView, belowSubview: )"\
+\
+12. \
+Creating a UITableView. Settings its attributes programmatically. \
+Setting our new table's delegate and dataSourse. Setting reloadData( ). \
+Adding the table as a subview to self (SlideMenu). \
+\
+13. \
+Start to implement the table's delegate funcs. \
+Programmatically set up the cell and its attributes. \
+\
+14. \
+We are ready to give our SlideMenu view a try in our main ViewController. \
+Initialize an instance in viewDidLoad. \
+Everything works. \
+\
+15. \
+Declare a SideMenuDelegate. func didSelectMenuItem. \
+Declare a var menuDelegate.\
+In didSelectRowAt: we check if we set the delegate, and call the delegate method. \
+Adopt the delegate for the main viewController. \
+Declare the delegate as self (here we use that weird variable of delegate type.)\
+In viewController Implement the delegate func \
+\
+ \
+\
+ \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

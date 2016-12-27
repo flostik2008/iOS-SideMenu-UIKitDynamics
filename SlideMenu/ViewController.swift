@@ -8,17 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SlideMenuDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        let slideMenu = SlideMenu(menuWidth: 150, menuItemTitles: ["Home", "User", "Settings"], parentViewController: self)
+        
+        slideMenu.menuDelegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func didSelectMenuItem(withTitle title: String, index: Int) {
+        
+        print("Clicked on \(title), which has index of \(index)")
+        if title == "Home" {
+            print("User has pressed home")
+        }else if index == 3 {
+            print("User has pressed 3rd item in the menu")
+        }
+        
     }
+
 
 
 }
